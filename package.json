@@ -3,6 +3,8 @@
     "start:dev": "node src/server.js"
   },
   "dependencies": {
-    "express": "^4.21.1"
+    "class-validator": "^0.14.1",
+    "express": "^4.21.1",
+    "lodash": "^4.17.21"
   }
 }
