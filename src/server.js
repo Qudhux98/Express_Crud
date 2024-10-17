@@ -83,7 +83,7 @@ app.put('/todos/:id', (req, res) => {
 
 app.delete('/todo/:id', (req, res) => {
   const id = req.params.id;
-  const todoIndex = todos.find((u) => u.id === parseInt(id));
+  const todoIndex = todos.findIndex((u) => u.id === parseInt(id));
   if (todoIndex === -1) return res.status(404).send('todo not found');
   const deletedTodo = todos.splice(todoIndex, 1);
   res
