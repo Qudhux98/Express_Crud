@@ -100,22 +100,94 @@ const users = [
 //<=====================TODO LIST==================>
 const todos = [
   {
-    id: 2,
-    date: '15/10/24',
-    title: 'my tuesday tasks',
+    id: 1,
+    userId: 3,
+    date: '16/10/24',
+    title: 'Monday errands',
     isDone: false,
-    tasks: ['going to study', 'going to gym', 'going to mall'],
+    tasks: [
+      'buy groceries',
+      'finish project proposal',
+      'gym workout',
+      'reply to emails',
+    ],
+  },
+  {
+    id: 2,
+    userId: 7,
+    date: '17/10/24',
+    title: 'Office work',
+    isDone: false,
+    tasks: [
+      'attend team meeting',
+      'prepare presentation slides',
+      'submit expense report',
+      'call client',
+    ],
   },
   {
     id: 3,
-    date: '15/10/24,',
-    title: 'weekend tasks',
+    userId: 3,
+    date: '18/10/24',
+    title: 'Personal growth',
     isDone: false,
     tasks: [
-      'make week plan',
-      "going to grandma's place",
-      'going to beach',
-      'going to usrah',
+      'read one chapter of a book',
+      'meditate for 30 minutes',
+      'learn new JavaScript concept',
+      'practice coding for 1 hour',
+    ],
+  },
+  {
+    id: 4,
+    userId: 1,
+    date: '19/10/24',
+    title: 'Household chores',
+    isDone: false,
+    tasks: [
+      'clean the living room',
+      'do the laundry',
+      'organize the garage',
+      'water the plants',
+    ],
+  },
+  {
+    id: 5,
+    userId: 3,
+    date: '20/10/24',
+    title: 'Health & fitness',
+    isDone: false,
+    tasks: [
+      'morning run',
+      'prepare healthy meals',
+      'yoga session',
+      'track calorie intake',
+    ],
+  },
+  {
+    id: 6,
+    userId: 7,
+    date: '21/10/24',
+    title: 'Social plans',
+    isDone: false,
+    tasks: [
+      'call a friend',
+      'dinner with family',
+      'attend study group',
+      'watch a movie',
+    ],
+  },
+  {
+    id: 7,
+    userId: 10,
+    date: '22/10/24',
+    title: 'Weekend leisure',
+    isDone: false,
+    tasks: [
+      'visit art gallery',
+      'bike ride in the park',
+      'bake a cake',
+      'read a novel',
     ],
   },
 ];
@@ -232,6 +304,29 @@ app.delete('/todo/:id', (req, res) => {
     .json({ message: 'successfully deleted the below', deletedTodo });
 });
 
+//<=================USERS' TODO LIST APIs=========================>
+
+//Get todo lists by user's ID==================>
+app.get('/usertodo/:userid', (req, res) => {
+  const userId = req.params.userid;
+  const confirmUser = users.findIndex((u) => u.id === parseInt(userId));
+  if (confirmUser === -1) {
+    return res.status(404).send('User does not exist');
+  }
+  const userTodoList = todos.filter((u) => u.userId === parseInt(userId));
+  if (userTodoList.length === 0) {
+    res.status(200).send('This user has no todo list');
+  } else {
+    if (userTodoList.length === 1) {
+      return res
+        .status(200)
+        .send(`This is your todo list ${JSON.stringify(userTodoList)}`);
+    }
+    res
+      .status(200)
+      .send(`These are your todo lists ${JSON.stringify(userTodoList)}`);
+  }
+});
 const port = 3000;
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
